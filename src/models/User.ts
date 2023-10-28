@@ -1,6 +1,7 @@
 import { sequelize } from "../database/database";
 import { DataTypes } from "sequelize";
 import { product } from "./Product";
+import { sell } from "./Sell";
 
 export const user = sequelize.define("users", {
   id: {
@@ -27,4 +28,10 @@ user.hasMany(product, {
   sourceKey: "id",
 });
 
+user.hasMany(sell, {
+    foreignKey: "userId",
+    sourceKey: "id",
+});
+
 product.belongsTo(user, { foreignKey: "userId", targetKey: "id" });
+sell.belongsTo(user, { foreignKey: "userId", targetKey: "id" });
