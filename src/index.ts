@@ -1,10 +1,12 @@
 import { app } from "./app";
 import dotenv from "dotenv";
 import { sequelize } from "./database/database";
+import './models/Product'
+import './models/User'
 
 (async function () {
   try {
-    await sequelize.authenticate();
+    await sequelize.sync();
     console.log("Connection has been established successfully.");
   } catch (error) {
     console.log("Unable to connect to the database:", error);
