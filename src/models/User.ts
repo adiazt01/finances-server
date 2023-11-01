@@ -1,9 +1,13 @@
 import { sequelize } from "../database/database";
 import { DataTypes } from "sequelize";
-import { product } from "./Product";
-import { sell } from "./Sell";
+import { Product } from "./Product";
+import { Sale } from "./Sell";
+import { UserAttributes } from "../types/user";
 
-export const user = sequelize.define("users", {
+/**
+ * User model definition.
+ */
+export const User = sequelize.define<UserAttributes>("users", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -23,15 +27,15 @@ export const user = sequelize.define("users", {
   },
 });
 
-user.hasMany(product, {
+User.hasMany(Product, { 
   foreignKey: "userId",
   sourceKey: "id",
 });
 
-user.hasMany(sell, {
+User.hasMany(Sale, {
     foreignKey: "userId",
     sourceKey: "id",
 });
 
-product.belongsTo(user, { foreignKey: "userId", targetKey: "id" });
-sell.belongsTo(user, { foreignKey: "userId", targetKey: "id" });
+Product.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
+Sale.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
